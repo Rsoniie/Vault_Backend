@@ -42,7 +42,9 @@ const userSchema = new mongoose.Schema(
         },
 
         liked_pdfs: {
-            type: [String]
+            type: [mongoose.Types.ObjectId],
+            Ref: 'File',
+            
         },
 
         name: {

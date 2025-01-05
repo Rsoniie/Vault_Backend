@@ -82,6 +82,47 @@ const downloadFile = async (req, res) => {
     }
 };
 
+const likeFile = async (req, res) => {
+
+    try {
+    const current_file_id = req.params.id;
+    if(!current_file_id)
+    {
+        return res.status(500).json({message: "Internal Error"});
+    }
+    console.log(current_file_id);
+    const this_user = await req.user;
+    console.log(this_user);
+
+
+    const this_blog = await File.findByIdAndUpdate(current_file_id);
+
+    if(!this_blog.liked_by.includes(this_user.userId))
+    {
+        this_blog.likes += 1;
+        this_blog.liked_by.push(this_user.userId);
+        await this_blog.save(this_user.userId);
+
+     // Getting user list...
+    
+     const updated_user = await User.findByIdAndUpdate(this_user.userId);
+     updated_user.liked_pdfs.push(current_file_id);
+     await updated_user.save();
+ 
+ 
+     return res.status(200).json({message: "Liked sucessfully"});
+    }
+    else 
+    {
+        return res.status(200).json({message: "Already liked this blog"});
+    }
+    } catch (error) {
+        console.log("This is error", error);
+        return res.status(500).json({message: "Internal Server error", error: error});
+    }
+    
+};
+
 
 export const uploadMiddleware = upload.single('pdf');
-export { uploadFile, downloadFile };
+export { uploadFile, downloadFile, likeFile };

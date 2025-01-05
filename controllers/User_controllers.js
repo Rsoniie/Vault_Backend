@@ -39,6 +39,13 @@ const Create_User = async (req, res) => {
     const hashed_password = await bcrypt.hash(password, salt);
     console.log(hashed_password);
 
+
+    // OTP feature
+
+
+
+
+    // Then saves
     const newUser = new User({
         username,
         password: hashed_password,
@@ -55,7 +62,7 @@ const Create_User = async (req, res) => {
     console.log("This is error", error)
     res.status(500).json({message: "This is error"})
   }
-}
+};
 
 const Login_User = async(req, res) => {
     try {
@@ -83,7 +90,15 @@ const Login_User = async(req, res) => {
         console.log("This is error while login user", error);
         return res.status(500).json({message: "Error while login user"});
     }
+};
+
+const Edit_Profile = async(req, res) => {
+    
 }
+
+
+
+
 
 
 

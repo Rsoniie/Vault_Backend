@@ -25,6 +25,10 @@ const pdfSchema = new mongoose.Schema({
     likes: {
         type: Number,
         default: 0
+    },
+    liked_by: {
+        type: [mongoose.Types.ObjectId],
+        Ref: 'User'
     }
 
     
