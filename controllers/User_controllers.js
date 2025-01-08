@@ -6,10 +6,13 @@ import { generateOTP, verifyOTP } from '../services/Otp_Verification.js'
 
 
 
+
+
 const SECRET_KEY = process.env.SECRET_KEY
 
 
 
+let EMAIL = "";
 const Create_User = async (req, res) => {
 
   try {
@@ -44,18 +47,10 @@ const Create_User = async (req, res) => {
     const generated_result =  await generateOTP(email);
     console.log("your otp is", generated_result.otp);
 
-    return res.status(200).json({message: "OTP sent successfully.", otp: generated_result.otp});
+
      
 
-    const user_otp = await req.body;
-    const isVerified = await verifyOTP(email, user_otp);
 
-    if(isVerified.success == false)
-    {
-        return res.status(400).json({message: "Please enter correct OTP"});
-    }
-    else 
-    {
         const newUser = new User({
             username,
             password: hashed_password,
@@ -63,12 +58,12 @@ const Create_User = async (req, res) => {
             email
         });
         
+        EMAIL = email;
         console.log(username, email, password, name);
     
         await newUser.save();
-        return res.status(200).json({message: "User created sucessfully"});
-
-    }
+        return res.status(200).json({message: "OTP sent successfully.", otp: generated_result.otp});
+        
 
   } catch (error) {
     console.log("This is error", error)
@@ -76,28 +71,31 @@ const Create_User = async (req, res) => {
   }
 };
 
-// const Verify_Otp = async(req, res) => {
-//     try {
-//         const user_otp = req.body;
-//         const email = req.body;
+const Verify_Otp = async(req, res) => {
+    try {
 
-//         // const isVerified = await verifyOTP(email, user_otp);
+        const user_otp = req.body;
+        const isVerified = await verifyOTP(EMAIL, user_otp);
 
-//         if(!isVerified)
-//         {
-//             return res.status(400).json({message: "Enter correct OTP"});
-//         }
-//         const {username, password, name} = req.body;
-//         const salt = await bcrypt.genSalt(10);
-//         const hashed_password = await bcrypt.hash(password, salt);
-//         console.log(username, hashed_password, name, email, user_otp);
-//         return res.status(200).json({message: "Successfully get into verification part"});
+        if(!isVerified)
+        {
+            return res.status(400).json({message: "Enter correct OTP."});
+        }
 
-//     } catch (error) {
-//         console.log("Internal Error", error);
-//         return res.status(500).json({message: "Internal server error", error : error});
-//     }
-// }
+        const email = EMAIL;
+        const curr_user = await User.findOne({email});
+        curr_user.verified = true;
+        await curr_user.save();
+ 
+        console.log(curr_user);
+
+        return res.status(200).json({message: "OTP Verified successfully.", email: EMAIL});
+
+    } catch (error) {
+        console.log("Internal Error", error);
+        return res.status(500).json({message: "Internal server error", error : error});
+    }
+}
 
 const Login_User = async(req, res) => {
     try {
@@ -108,6 +106,11 @@ const Login_User = async(req, res) => {
         if(!user)
         {
             return res.status(400).json({message: "User not found"});
+        }
+
+        if(user.verified == false)
+        {
+            return res.status(405).json({message: "OTP not verified"});
         }
 
         const isPasswordcorrect = bcrypt.compare(password, user.password);
@@ -140,4 +143,4 @@ const Edit_Profile = async(req, res) => {
 
 
 
-export {Create_User, Login_User}
+export {Create_User, Login_User, Verify_Otp}
