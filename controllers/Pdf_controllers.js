@@ -5,6 +5,7 @@ import axios from 'axios';
 import { File } from '../models/Pdf_model.js';
 import { User } from '../models/User_model.js';
 
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
@@ -123,6 +124,17 @@ const likeFile = async (req, res) => {
     
 };
 
+const deleteFile = async(req, res) => {
+
+};
+
+const allFile = async(req, res) => {
+    const all_files = await File.find();
+    console.log("These are all pdf's", all_files);
+    return res.status(200).json({message: "All files are extracted", all_files: all_files});
+};
+
+
 
 export const uploadMiddleware = upload.single('pdf');
-export { uploadFile, downloadFile, likeFile };
+export { uploadFile, downloadFile, likeFile, allFile};
