@@ -14,8 +14,8 @@ const pdfSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    key_words: {
-        type: [String]
+    description: {
+        type: String
     },
     author: {
         type: Schema.Types.ObjectId,
@@ -29,7 +29,12 @@ const pdfSchema = new mongoose.Schema({
     liked_by: {
         type: [mongoose.Types.ObjectId],
         Ref: 'User'
+    },
+    author_name: {
+        type: String,
+        required: true
     }
+    
 
     
 });

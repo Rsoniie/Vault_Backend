@@ -130,9 +130,29 @@ const Login_User = async(req, res) => {
     }
 };
 
-const Edit_Profile = async(req, res) => {
+const Profile = async (req, res) => 
+{
 
-};
+    console.log("Get into client side profile view");
+    try{
+
+      const username = await req.params.name;
+      if(!username)
+      {
+        return res.status(400).json({message: "User Not selected"});
+      }
+    //   console.log(username);
+      const user = await User.findOne({username});
+      return res.status(200).json({message: "User found Sucessfully", user: user});
+    }
+    catch(error)
+    {
+        console.log("Internal Server error", error);
+        return res.status(500).json({message: "Internal server error"});
+    }
+
+
+}
 
 
 
@@ -143,4 +163,4 @@ const Edit_Profile = async(req, res) => {
 
 
 
-export {Create_User, Login_User, Verify_Otp}
+export {Create_User, Login_User, Verify_Otp, Profile}

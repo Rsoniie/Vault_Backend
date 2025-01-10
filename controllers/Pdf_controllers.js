@@ -11,7 +11,9 @@ const upload = multer({ storage });
 
 const uploadFile = async (req, res) => {
     const user = await req.user;
-
+    
+    const name = await User.findById(req.user.userId);
+    const author_name = name.username;
     console.log(user);
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
@@ -26,7 +28,8 @@ const uploadFile = async (req, res) => {
             subject,
             keywords,
             author: user.userId,
-            likes: 0
+            likes: 0,
+            author_name
 
         });
 
@@ -133,6 +136,10 @@ const allFile = async(req, res) => {
     console.log("These are all pdf's", all_files);
     return res.status(200).json({message: "All files are extracted", all_files: all_files});
 };
+
+const authors_file = async(req, res) => {
+    cosnt 
+}
 
 
 
