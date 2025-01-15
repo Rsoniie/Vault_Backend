@@ -4,6 +4,7 @@ import cors from 'cors'
 import connectDB from './config/db_connection.js';
 import User_routes from './routes/User_routes.js';
 import File_routes from './routes/Pdf_routes.js';
+import Feedback_routes from './routes/Feed_route.js';
 
 const app = express();
 app.use(express.json());
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 
 app.use('/user', User_routes);
 app.use('/pdf', File_routes);
+app.use('/feed', Feedback_routes);
 
 app.listen(PORT, () => {
     console.log(`App is running on port ${PORT}`);

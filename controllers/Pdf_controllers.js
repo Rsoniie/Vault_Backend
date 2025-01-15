@@ -21,7 +21,7 @@ const uploadFile = async (req, res) => {
 
     try {
         const fileUrl = await uploadToCloudinary(req.file.buffer);
-        const {topic, subject, keywords} = req.body;
+        const {topic, subject, keywords, description} = req.body;
         const newfile = new File({
             file_path: fileUrl,
             topic,
@@ -29,8 +29,8 @@ const uploadFile = async (req, res) => {
             keywords,
             author: user.userId,
             likes: 0,
-            author_name
-
+            author_name,
+            description
         });
 
         await newfile.save();
@@ -137,9 +137,9 @@ const allFile = async(req, res) => {
     return res.status(200).json({message: "All files are extracted", all_files: all_files});
 };
 
-const authors_file = async(req, res) => {
-    cosnt 
-}
+// const authors_file = async(req, res) => {
+//     cosnt 
+// }
 
 
 

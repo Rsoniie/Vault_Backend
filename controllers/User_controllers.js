@@ -3,6 +3,7 @@ import { User } from '../models/User_model.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { generateOTP, verifyOTP } from '../services/Otp_Verification.js'
+import { File } from '../models/Pdf_model.js'
 
 
 
@@ -17,9 +18,9 @@ const Create_User = async (req, res) => {
 
   try {
 
-    const { username, email, password, name } =  req.body;
+    const { username, email, password, profession, institution } =  req.body;
 
-    if(!username || !email || !password || !name)
+    if(!username || !email || !password)
     {
         return res.status(400).json({message : "All fields are required"});
     }
@@ -54,12 +55,13 @@ const Create_User = async (req, res) => {
         const newUser = new User({
             username,
             password: hashed_password,
-            name,
-            email
+            email,
+            profession,
+            institution
         });
         
         EMAIL = email;
-        console.log(username, email, password, name);
+        console.log(username, email, password, institution, profession);
     
         await newUser.save();
         return res.status(200).json({message: "OTP sent successfully.", otp: generated_result.otp});
@@ -143,7 +145,9 @@ const Profile = async (req, res) =>
       }
     //   console.log(username);
       const user = await User.findOne({username});
-      return res.status(200).json({message: "User found Sucessfully", user: user});
+      console.log(username);
+      const all_files = await File.find({author_name: username});
+      return res.status(200).json({message: "User found Sucessfully", user: user, all_files});
     }
     catch(error)
     {
@@ -152,7 +156,19 @@ const Profile = async (req, res) =>
     }
 
 
-}
+};
+
+// const Stars = async(req, res) => {
+//     try {
+//         const username = req.params.name;
+//         const user = await User.findOneAndUpdate({username});
+
+//         user.stars += 1;
+        
+
+
+//     }
+// }
 
 
 
