@@ -13,6 +13,8 @@ app.use(express.json());
 app.use(cors({
     origin: '*'
 }));
+
+
 const PORT = 3000
 
 // console.log("Thiese are all environment variagles", process.env.MONGODB_URI)
