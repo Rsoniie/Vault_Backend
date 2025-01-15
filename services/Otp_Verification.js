@@ -30,7 +30,7 @@ const generateOTP = async(email) => {
         from: 'roshansonivslasthope@gmail.com',
         to: email,
         subject: 'Your OTP Code',
-        text: `Your OTP is: ${otp}`,
+        text: `Just one step lefy  here is your OTP : ${otp}`,
     };
 
     // Send the OTP to the provided email address
