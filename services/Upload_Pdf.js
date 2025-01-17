@@ -5,7 +5,7 @@ export async function uploadToCloudinary(fileBuffer) {
     try {
         const result = await new Promise((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
-                { resource_type: 'auto'},
+                { resource_type: 'raw'},
                 (error, result) => {
                     if (error) reject(error);
                     else resolve(result);
