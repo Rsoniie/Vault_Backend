@@ -138,8 +138,8 @@ const Profile = async (req, res) =>
     console.log("Get into client side profile view");
     try{
 
-    //   const username = await req.params.name;
-      const username = await req.params.author_name;
+      const username = await req.params.name;
+    //   const username = await req.params.author_name;
       if(!username)
       {
         return res.status(400).json({message: "User Not selected"});
