@@ -10,6 +10,7 @@ router.post('/verify', Verify_Otp);
 router.get('/profile/:name', Profile);
 
 
+
 export default router;
 
 
