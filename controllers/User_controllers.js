@@ -115,7 +115,7 @@ const Login_User = async(req, res) => {
             return res.status(405).json({message: "OTP not verified"});
         }
 
-        const isPasswordcorrect = bcrypt.compare(password, user.password);
+        const isPasswordcorrect = await bcrypt.compare(password, user.password);
 
         if(!isPasswordcorrect)
         {
