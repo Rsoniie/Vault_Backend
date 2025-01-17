@@ -5,7 +5,7 @@ export async function uploadToCloudinary(fileBuffer) {
     try {
         const result = await new Promise((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
-                { resource_type: 'auto', secure: true},
+                { resource_type: 'auto'},
                 (error, result) => {
                     if (error) reject(error);
                     else resolve(result);
@@ -13,8 +13,8 @@ export async function uploadToCloudinary(fileBuffer) {
             );
             uploadStream.end(fileBuffer);
         });
-        console.log(result.secure_url);
-        return result.secure_url; 
+        console.log(result.url);
+        return result.url; 
     } catch (error) {
         console.error('Error uploading to Cloudinary:', error);
         throw error; 
