@@ -13,8 +13,8 @@ export async function uploadToCloudinary(fileBuffer) {
             );
             uploadStream.end(fileBuffer);
         });
-        console.log(result.url);
-        return result.url; 
+        console.log(result.secure_url);
+        return result.secure_url; 
     } catch (error) {
         console.error('Error uploading to Cloudinary:', error);
         throw error; 
