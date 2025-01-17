@@ -78,6 +78,8 @@ const downloadFile = async (req, res) => {
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+
 
         response.data.pipe(res);
     } catch (error) {
