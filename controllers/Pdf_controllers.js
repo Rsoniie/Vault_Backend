@@ -136,7 +136,7 @@ const deleteFile = async(req, res) => {
 };
 
 const allFile = async(req, res) => {
-    const all_files = await File.find();
+    const all_files = await File.find().sort({_id: -1});
     console.log("These are all pdf's", all_files);
     return res.status(200).json({message: "All files are extracted", all_files: all_files});
 };

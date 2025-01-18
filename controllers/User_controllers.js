@@ -147,7 +147,7 @@ const Profile = async (req, res) =>
     //   console.log(username);
       const user = await User.findOne({username});
       console.log(username);
-      const all_files = await File.find({author_name: username});
+      const all_files = await File.find({author_name: username}).sort({_id : -1});
       return res.status(200).json({message: "User found Sucessfully", user: user, all_files});
     }
     catch(error)
