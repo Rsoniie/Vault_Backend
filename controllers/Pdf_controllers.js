@@ -54,7 +54,10 @@ const uploadFile = async (req, res) => {
 };
 
 const downloadFile = async (req, res) => {
-    const pdfUrl = req.query.url;
+    console.log("Get into download block");
+    const pdfUrl = req.query.secure_url;
+
+    console.log("This si the url i get", pdfUrl);
 
     if (!pdfUrl) {
         return res.status(400).send("No PDF URL provided.");
