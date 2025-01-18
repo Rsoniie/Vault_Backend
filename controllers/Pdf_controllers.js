@@ -39,7 +39,6 @@ const uploadFile = async (req, res) => {
         console.log(updating_user);
         updating_user.uploaded_pdfs.push(fileUrl);
         await updating_user.save();
-        
         res.status(200).json({
             message: 'File uploaded successfully',
             url: fileUrl
