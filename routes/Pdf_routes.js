@@ -12,6 +12,6 @@ const upload = multer({ storage });
 router.post('/upload', VerifyUser, upload.single('pdf'), uploadFile);
 router.get('/download', VerifyUser, downloadFile);
 router.post('/like/:id',VerifyUser, likeFile);
-router.get('/all_files', allFile);
+router.get('/all_files',VerifyUser, allFile);
 
 export default router;
