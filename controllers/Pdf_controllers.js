@@ -141,11 +141,30 @@ const allFile = async(req, res) => {
     return res.status(200).json({message: "All files are extracted", all_files: all_files});
 };
 
-// const authors_file = async(req, res) => {
-//     cosnt 
-// }
+
+const Search_by_sub = async(req, res) => {
+    try {
+        
+        // console.log("Get into try block");
+        const subject = await req.params.subject;
+    
+        if (!subject)
+        {
+            return res.status(400).json({message: "No subject is  selected"});
+        }
+        // console.log(username);
+        const response = await File.find({subject: subject});
+        // console.log(response)
+    
+        return res.status(200).json({message: "Files fetched by Subject", files: response})
+    } catch (error) {
+        console.log("This is error in catch block", error);
+        return res.status(500).json({message:"Internal server error", error});
+    }
+    }
+    
 
 
 
 export const uploadMiddleware = upload.single('pdf');
-export { uploadFile, downloadFile, likeFile, allFile};
+export { uploadFile, downloadFile, likeFile, allFile, Search_by_sub};

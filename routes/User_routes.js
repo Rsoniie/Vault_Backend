@@ -8,7 +8,9 @@ const router = Router();
 router.route('/createuser').post(Create_User);
 router.route('/loginuser').post(Login_User);
 router.post('/verify', Verify_Otp);
-router.get('/profile/:name', verifyUser, Profile);
+router.get('/profile/:name', Profile);
+// router.get('/by_subject/:subject', Search_by_sub);
+
 
 
 

@@ -160,11 +160,4 @@ const Profile = async (req, res) =>
 };
 
 
-
-
-
-
-
-
-
 export {Create_User, Login_User, Verify_Otp, Profile}
