@@ -22,7 +22,7 @@ const pdfSchema = new mongoose.Schema({
         ref: 'User', 
         required: true
     },
-    likes: {
+    downloads: {
         type: Number,
         default: 0
     },
