@@ -156,7 +156,7 @@ const Search_by_sub = async (req, res) => {
       return res.status(400).json({ message: "No subject is  selected" });
     }
     // console.log(username);
-    subject = subject.toLowerCase();
+    // subject = subject.toLowerCase();
     const response = await File.find({ subject: subject });
     // console.log(response)
 
